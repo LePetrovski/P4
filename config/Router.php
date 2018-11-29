@@ -7,11 +7,13 @@ use App\src\controller\ErrorController;
 class Router
 {
 
+  private $frontController;
   private $errorController;
 
 
   public function __construct()
   {
+    $this->frontController = new FrontController();
     $this->errorController = new ErrorController();
   }
 
@@ -22,6 +24,12 @@ class Router
       {
         if($_GET['route'] === 'post'){
           $this->frontController->post($_GET['postId']);
+        }
+        else if($_GET['route'] === "addComment") {
+          $this->frontController->addComment($_GET['postId'], $_POST);
+        }
+        else if($_GET['route'] === "reportComment") {
+          $this->frontController->reportComment($_GET['commentId'], $_GET['postId']);
         }
         else{
           $this->errorController->unknown();
