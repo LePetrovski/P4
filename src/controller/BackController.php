@@ -2,6 +2,7 @@
 
 namespace App\src\controller;
 
+use App\src\DAO\AdminDAO;
 use App\src\DAO\CommentDAO;
 use App\src\DAO\PostDAO;
 use App\src\model\View;
@@ -11,12 +12,14 @@ class BackController
   private $view;
   private $postDAO;
   private $commentDAO;
+  private $adminDAO;
 
   public function __construct()
   {
     $this->view = new View();
     $this->postDAO = new PostDAO();
     $this->commentDAO = new CommentDAO();
+    $this->adminDAO = new AdminDAO();
   }
 
   public function addPost($post)
@@ -64,5 +67,41 @@ class BackController
   {
     $this->commentDAO->deleteComment($commentId);
     header('Location: ../public/index.php?route=post&postId=' . $postId);
+  }
+
+  public function login($log)
+  {
+    extract($log);
+    $admin = $this->adminDAO->logIn($pseudo);
+
+    $isPasswordCorrect = password_verify($password, $admin->getPassword());
+
+    if (!$admin) {
+      session_start();
+      $_SESSION['wrong'] = '1Mauvais identifiant ou mot de passe !';
+      header('Location: ../public/index.php');
+    }else {
+      if ($isPasswordCorrect) {
+        session_start();
+        $_SESSION['status'] = 'Vous êtes connectés';
+        $_SESSION['admin'] = 'Rochefort';
+        header('Location: ../public/index.php#admin');
+      }else {
+        session_start();
+        $_SESSION['wrong'] = '2Mauvais identifiant ou mot de passe !';
+        header('Location: ../public/index.php');
+      }
+    }
+  }
+
+  public function destroy()
+  {
+    session_start();
+
+    $_SESSION = array();
+    session_destroy();
+    unset($_SESSION);
+
+    header('Location: index.php#blog');
   }
 }

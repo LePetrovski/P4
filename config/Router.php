@@ -47,6 +47,12 @@ class Router
         else if($_GET['route'] === "deleteComment") {
           $this->backController->deleteComment($_GET['commentId'], $_GET['postId']);
         }
+        else if($_GET['route'] === "login") {
+          $this->backController->login($_POST);
+        }
+        else if($_GET['route'] === "destroy") {
+          $this->backController->destroy();
+        }
         else{
           $this->errorController->unknown();
         }
