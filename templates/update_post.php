@@ -1,4 +1,7 @@
 <?php
+session_start();
+?>
+<?php
 $this->title = "Modifier un chapitre";
 ?>
 <h1 class="titre co-md-12">MODIFIER UN CHAPITRE</h1>
