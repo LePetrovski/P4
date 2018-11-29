@@ -10,15 +10,15 @@ if(isset($_SESSION['update_post'])){
   unset($_SESSION['update_post']);
 }?>
 <div class="posts">
-  <h1><?= strip_tags($post->getTitle());?></h1>
-  <div class="postContent"><?= $post->getContent();?></div>
-  <p class="postDate"><small><?='Le ' . strip_tags($post->getDateCreationFr());?></small></p>
+    <h1><?= strip_tags($post->getTitle());?></h1>
+    <div class="postContent"><?= $post->getContent();?></div>
+    <p class="postDate"><small><?='Le ' . strip_tags($post->getDateCreationFr());?></small></p>
 </div>
 
 <?php if(isset($_SESSION['admin']))
 {
   ?>
-  <a class="btn btn-info col-md-12" href="../public/index.php?route=updatePost&postId=<?= strip_tags($post->getId()); ?>#blog">MODIFIER LE CHAPITRE</a>
+  <a class="btn btn-info col-md-12 bouton" href="../public/index.php?route=updatePost&postId=<?= strip_tags($post->getId()); ?>#blog">MODIFIER LE CHAPITRE</a>
   <button type="button" class="btn btn-dark col-md-12" data-toggle="modal" data-target="#suppression">
     Supprimer le chapitre
   </button>
@@ -47,7 +47,7 @@ if(isset($_SESSION['update_post'])){
   </div>
 </div>
 
-<a class="btn btn-secondary col-md-12" href="../public/index.php">Retour à la liste des articles</a>
+<a class="btn btn-secondary col-md-12 bouton" href="../public/index.php">Retour à la liste des articles</a>
 
 <div class="comments">
   <form action="index.php?route=addComment&postId=<?= strip_tags($post->getId());?>" method="post">
@@ -61,52 +61,51 @@ if(isset($_SESSION['update_post'])){
   </form>
 
   <h3>Commentaires</h3>
-  <?php
-  foreach($comments as $comment) {
+    <?php
+    foreach($comments as $comment) {
     ?>
-    <div class="comment">
+      <div class="comment">
       <h4><?= strip_tags($comment->getAuthor()); ?></h4>
       <p><?= strip_tags($comment->getComment()); ?></p>
       <p class="commentDate">Posté le <?= strip_tags($comment->getDateCommentFr()); ?></p>
       <?php if (($comment->getReportComment()) >= 1)
       {
-        ?>
+      ?>
         <?php if(isset($_SESSION['admin'])) {
         ?>
         <p>Signalé <?= strip_tags($comment->getReportComment()); ?> fois</p>
         <?php
       }
         ?>
-        <?php
+      <?php
       }
       ?>
-    </div>
-    <a class="btn btn-secondary adminComment" href="index.php?route=reportComment&commentId=<?= strip_tags($comment->getId()); ?>&postId=<?= strip_tags($post->getId()); ?>">
+      </div>
+      <a class="btn btn-secondary adminComment" href="index.php?route=reportComment&commentId=<?= strip_tags($comment->getId()); ?>&postId=<?= strip_tags($post->getId()); ?>">
       <small>Signaler ce commentaire</small>
-    </a>
+      </a>
 
-    <?php if(isset($_SESSION['admin'])) {
-      ?>
-      <?php if (($comment->getReportComment()) >= 1) {
+  <?php if(isset($_SESSION['admin'])) {
         ?>
-        <a class="btn btn-success adminComment"
-           href="index.php?route=resetReport&commentId=<?= strip_tags($comment->getId()); ?>&postId=<?= strip_tags($post->getId()); ?>">
-          <small>Annuler le signalement</small>
+        <?php if (($comment->getReportComment()) >= 1) {
+          ?>
+          <a class="btn btn-success adminComment"
+             href="index.php?route=resetReport&commentId=<?= strip_tags($comment->getId()); ?>&postId=<?= strip_tags($post->getId()); ?>">
+            <small>Annuler le signalement</small>
+          </a>
+          <?php
+        }
+        ?>
+        <a class="btn btn-danger adminComment deleteBtn"
+           href="index.php?route=deleteComment&commentId=<?= strip_tags($comment->getId()); ?>&postId=<?= strip_tags($post->getId()); ?>">
+          <small>Supprimer ce commentaire</small>
         </a>
+        <br/>
         <?php
       }
-      ?>
-      <a class="btn btn-danger adminComment deleteBtn"
-         href="index.php?route=deleteComment&commentId=<?= strip_tags($comment->getId()); ?>&postId=<?= strip_tags($post->getId()); ?>">
-        <small>Supprimer ce commentaire</small>
-      </a>
-      <br/>
+    ?>
       <?php
     }
     ?>
-    <?php
-  }
-  ?>
 </div>
-
 
