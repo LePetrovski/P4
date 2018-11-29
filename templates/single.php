@@ -9,6 +9,11 @@ $this->title = "Post";
   <p class="postDate"><small><?='Le ' . strip_tags($post->getDateCreationFr());?></small></p>
 </div>
 
+<a class="btn btn-info col-md-12" href="../public/index.php?route=updatePost&postId=<?= strip_tags($post->getId()); ?>#blog">MODIFIER LE CHAPITRE</a>
+<button type="button" class="btn btn-dark col-md-12" data-toggle="modal" data-target="#suppression">
+  Supprimer le chapitre
+</button>
+<br>
 <a class="btn btn-secondary col-md-12" href="../public/index.php">Retour à la liste des articles</a>
 
 <div class="comments">
@@ -34,6 +39,16 @@ $this->title = "Post";
     <a class="btn btn-secondary adminComment" href="index.php?route=reportComment&commentId=<?= strip_tags($comment->getId()); ?>&postId=<?= strip_tags($post->getId()); ?>">
       <small>Signaler ce commentaire</small>
     </a>
+    <a class="btn btn-success adminComment"
+            href="index.php?route=resetReport&commentId=<?= strip_tags($comment->getId()); ?>&postId=<?= strip_tags($post->getId()); ?>">
+      <small>Annuler le signalement</small>
+    </a>
+
+    <a class="btn btn-danger adminComment deleteBtn"
+       href="index.php?route=deleteComment&commentId=<?= strip_tags($comment->getId()); ?>&postId=<?= strip_tags($post->getId()); ?>">
+      <small>Supprimer ce commentaire</small>
+    </a>
+    <br/>
     <?php
   }
   ?>

@@ -2,6 +2,10 @@
 $this->title = "Mon blog";
 ?>
 
+<a class="btn btn-light col-md-12 addBtn" href="../public/index.php?route=addPost#add">
+  AJOUTER UN NOUVEAU CHAPITRE
+</a>
+
 <?php
 foreach ($posts as $post)
 {
