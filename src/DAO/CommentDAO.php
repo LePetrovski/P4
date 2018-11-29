@@ -21,6 +21,9 @@ class CommentDAO extends DAO
   public function addComment($postId, $comments)
   {
     extract($comments);
+    if (empty($author)){
+      $author = 'Visiteur inconnu';
+    }
     $sql = 'INSERT INTO comments(id_post, author, comment, report_comment, date_comment) VALUES(?, ?, ?, ?, NOW())';
     $this->sql($sql, [$postId, $author, $comment, 0]);
   }

@@ -24,7 +24,7 @@ class BackController
 
   public function addPost($post)
   {
-    if (isset($post['submit'])) {
+    if(isset($post['submit'])) {
       $this->postDAO->addPost($post);
       session_start();
       $_SESSION['add_post'] = 'Le nouveau chapitre a bien été ajouté';
@@ -37,11 +37,11 @@ class BackController
 
   public function updatePost($post, $postId)
   {
-    if (isset($post['submit'])) {
+    if(isset($post['submit'])) {
       $this->postDAO->updatePost($post, $postId);
       session_start();
       $_SESSION['update_post'] = 'Le chapitre a bien été modifié';
-      header('location: ../public/index.php?route=post&postId=' . $postId . '#update');
+      header('location: ../public/index.php?route=post&postId='.$postId.'#update');
     }
     $idPost = $this->postDAO->getPost($postId);
     $this->view->render('update_post', [
@@ -60,13 +60,13 @@ class BackController
   public function resetReport($commentId, $postId)
   {
     $this->commentDAO->resetReport($commentId);
-    header('Location: ../public/index.php?route=post&postId=' . $postId);
+    header('Location: ../public/index.php?route=post&postId='. $postId);
   }
 
   public function deleteComment($commentId, $postId)
   {
     $this->commentDAO->deleteComment($commentId);
-    header('Location: ../public/index.php?route=post&postId=' . $postId);
+    header('Location: ../public/index.php?route=post&postId='. $postId);
   }
 
   public function login($log)

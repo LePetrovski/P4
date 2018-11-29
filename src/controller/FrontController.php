@@ -40,8 +40,32 @@ class FrontController
 
   public function addComment($postId, $comments)
   {
-    $this->commentDAO->addComment($postId, $comments);
-    header('Location: ../public/index.php?route=post&postId=' . $postId);
+    $secret = "6LdbXn0UAAAAABr6LmkSY6mSpReh_FRKr-6TXqoP";
+    $response = $_POST['g-recaptcha-response'];
+    $remoteip = $_SERVER['REMOTE_ADDR'];
+
+    $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
+      . $secret
+      . "&response=" . $response
+      . "&remoteip=" . $remoteip;
+
+    $decode = json_decode(file_get_contents($api_url), true);
+
+    if ($decode['success'] == true) {
+      extract($comments);
+      if (strlen($comment) >= 2) {
+        if (ctype_space($comment)) {
+          echo 'Un espace n\'est pas un commentaire';
+        } else {
+          $this->commentDAO->addComment($postId, $comments);
+          header('Location: ../public/index.php?route=post&postId=' . $postId);
+        }
+      } else {
+        echo 'Le commentaire doit comporter plus de deux caractères.';
+      }
+    } else {
+      header('Location: ../public/index.php?route=post&postId=' . $postId);
+    }
   }
 
   public function reportComment($commentId, $postId)
