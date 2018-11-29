@@ -101,7 +101,7 @@ input, select, textarea {
 	/*border: 1px black solid !important;*/
 	font-size: 15px;
 	font-family: 'Merriweather', serif !important;
-	margin: 8% 10% 10% 10%;
+	margin: 0 10% 10% 10%;
 	padding: 10%;
 }
 
