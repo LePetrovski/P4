@@ -79,7 +79,7 @@ class BackController
     if (!$admin) {
       session_start();
       $_SESSION['wrong'] = '1Mauvais identifiant ou mot de passe !';
-      header('Location: ../public/index.php');
+      header('Location: ../public/index.php#error');
     }else {
       if ($isPasswordCorrect) {
         session_start();
@@ -89,7 +89,7 @@ class BackController
       }else {
         session_start();
         $_SESSION['wrong'] = '2Mauvais identifiant ou mot de passe !';
-        header('Location: ../public/index.php');
+        header('Location: ../public/index.php#error');
       }
     }
   }
